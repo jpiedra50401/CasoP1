@@ -40,52 +40,6 @@ namespace G4_SC701_CasoPractico1.Rutas.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("G4_SC701_CasoPractico1.Rutas.Models.Ruta", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Horarios")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Paradas")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("UsuarioRegistroId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UsuarioRegistroId");
-
-                    b.ToTable("Rutas");
-                });
-
             modelBuilder.Entity("G4_SC701_CasoPractico1.Rutas.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -171,18 +125,6 @@ namespace G4_SC701_CasoPractico1.Rutas.Migrations
                     b.ToTable("Vehiculos");
                 });
 
-            modelBuilder.Entity("G4_SC701_CasoPractico1.Rutas.Models.Ruta", b =>
-                {
-                    b.HasOne("G4_SC701_CasoPractico1.Rutas.Models.Usuario", "UsuarioRegistro")
-                        .WithMany("RutasRegistradas")
-                        .HasForeignKey("UsuarioRegistroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_Ruta_UsuarioRegistro");
-
-                    b.Navigation("UsuarioRegistro");
-                });
-
             modelBuilder.Entity("G4_SC701_CasoPractico1.Rutas.Models.Usuario", b =>
                 {
                     b.HasOne("G4_SC701_CasoPractico1.Rutas.Models.Rol", "Rol")
@@ -199,7 +141,7 @@ namespace G4_SC701_CasoPractico1.Rutas.Migrations
                     b.HasOne("G4_SC701_CasoPractico1.Rutas.Models.Usuario", "usuario")
                         .WithMany("Vehiculos")
                         .HasForeignKey("idUsuario")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Usuario_Vehiculo");
 
@@ -213,8 +155,6 @@ namespace G4_SC701_CasoPractico1.Rutas.Migrations
 
             modelBuilder.Entity("G4_SC701_CasoPractico1.Rutas.Models.Usuario", b =>
                 {
-                    b.Navigation("RutasRegistradas");
-
                     b.Navigation("Vehiculos");
                 });
 #pragma warning restore 612, 618
